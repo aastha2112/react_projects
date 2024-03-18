@@ -5,7 +5,6 @@ import Input from "../../components/Input";
 import { useNavigate } from "react-router-dom";
 import { checkValidEmail } from "../../helpers";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -21,8 +20,6 @@ function LoginForm() {
   });
 
   function handleChange(fieldName, fieldValue) {
-    console.log({ ...loginFormState, [fieldName]: fieldValue });
-
     setLoginFormState({ ...loginFormState, [fieldName]: fieldValue });
   }
   function errorMessage(errorField, errorValue) {
@@ -40,7 +37,6 @@ function LoginForm() {
     } else {
       errorMessage("email", null);
     }
-    console.log({ isEmailValid });
 
     let isPasswordValid = loginFormState.password.length >= 8;
     if (!isPasswordValid) {
@@ -48,10 +44,8 @@ function LoginForm() {
     } else {
       errorMessage("password", null);
     }
-    console.log({ isPasswordValid });
 
     let users = JSON.parse(localStorage.getItem("users"));
-    console.log({ users });
     let existingUser = users.find(
       (user) => user.email === loginFormState.email
     );
@@ -61,12 +55,9 @@ function LoginForm() {
       toast.error("Invalid Credentials");
       return;
     }
-    // console.log({ existingUser });
 
     if (existingUser.password === loginFormState.password) {
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      console.log({ existingUser });
-      console.log(existingUser.password);
 
       navigate("/");
     } else {

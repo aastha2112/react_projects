@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 import { checkValidEmail } from "../../helpers";
 
 function SignUpForm() {
-  const [isDisabled, setIsDisabled] = useState(false);
   const [errors, setErrors] = useState({
     firstName: null,
     lastName: null,
@@ -30,8 +29,6 @@ function SignUpForm() {
   function handleSubmit() {
     let isFirstNameValid = formState.firstName.length > 3;
 
-    console.log({ isFirstNameValid }, "L:39");
-
     if (!isFirstNameValid) {
       errorMessage(
         "firstName",
@@ -44,7 +41,6 @@ function SignUpForm() {
       ? formState.lastName.length > 3
       : true;
 
-    console.log({ isLastNameValid }, "L:4");
     if (!isLastNameValid) {
       errorMessage(
         "lastName",
@@ -70,11 +66,6 @@ function SignUpForm() {
 
     let isConfirmPasswordValid = formState.confirmPassword.length >= 8;
 
-    console.log(
-      formState.password !== formState.confirmPassword &&
-        isConfirmPasswordValid,
-      "L:90"
-    );
     if (
       formState.password !== formState.confirmPassword ||
       !isConfirmPasswordValid
@@ -97,7 +88,6 @@ function SignUpForm() {
     }
 
     if (!formState.TnCChecked) {
-      // show toast
       toast.error("Please accept the terms and conditions to continue.");
     }
 
@@ -111,20 +101,16 @@ function SignUpForm() {
       formState.TnCChecked
     ) {
       let users = JSON.parse(localStorage.getItem("users")) || [];
-      //   console.log({ users });
       let existingUser = users.find((user) => user.email === formState.email);
-      console.log({ existingUser });
 
       if (!existingUser) {
         users.push(formState);
         localStorage.setItem("users", JSON.stringify(users));
-        console.log(users);
         toast.success("Signup successfull");
         navigate("/login");
       } else {
         toast.error("Email already exist");
       }
-      //   localStorage.setItem("`1`", JSON.stringify(formState));
     }
   }
 
@@ -135,7 +121,6 @@ function SignUpForm() {
     }));
   }
 
-  //   console.log(errors);
   function handleOnChange(fieldName, fieldValue) {
     setFormState({ ...formState, [fieldName]: fieldValue });
   }
@@ -209,11 +194,7 @@ function SignUpForm() {
         checkboxValue={formState.TnCChecked}
         handleChange={handleTnCCheckbox}
       />
-      <CreateAccountButton
-        formDisabled={isDisabled}
-        onSubmit={handleSubmit}
-        title="Create an account"
-      />
+      <CreateAccountButton onSubmit={handleSubmit} title="Create an account" />
     </form>
   );
 }

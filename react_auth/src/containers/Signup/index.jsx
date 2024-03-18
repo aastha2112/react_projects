@@ -1,9 +1,5 @@
 import Header from "../../components/Header";
-import Input from "../../components/Input";
 import Navbar from "../../components/Navbar";
-import TermsAndConditions from "../../components/TermsAndConditions";
-import CreateAccountButton from "../../components/CreateAccountButton";
-// import Navigations from "../components/Navigations";
 import { useNavigate } from "react-router-dom";
 
 import Logo from "../../components/Logo";
@@ -36,7 +32,6 @@ function SignUp() {
           <SignUpForm />
         </div>
       </div>
-      {/* <Navigations /> */}
     </>
   );
 }
